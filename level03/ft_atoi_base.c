@@ -24,7 +24,26 @@ int	ft_atoi_base(const char *str, int str_base);
 */
 
 #include <unistd.h>
-#define BASE "0123456789abcdef"
+
+int ft_atoi(char *str)
+{
+    int i = 0;
+	int res = 0;
+	int sign = 1;
+    while (str[i] == ' ' || str[i] == '\t')
+        i++;
+    if (str[i] == '+' || str[i] == '-')
+    {
+        sign = -1;
+        i++;
+    }
+    while(str[i] >= '0' && str[i] <= '9')
+    {
+        res = res * 10 + (str[i] - '0');
+        i++;
+    }
+    return (res * sign);
+}
 
 int	ft_atoi_base(const char *str, int str_base)
 {
@@ -53,6 +72,7 @@ int	ft_atoi_base(const char *str, int str_base)
         if (value >= str_base)
             break;
         result = result * str_base + value;
+        i++;
     }
     return (result * sign);
 }
@@ -63,14 +83,14 @@ int main(int argc, char **argv)
     
     if (argc == 3)
     {
-        int res = ft_atoi_base(argv[1], argv[2]);
-        printf("og: %d\nmy: %d\n", atoi(argv[1]), res);
+        int res = ft_atoi_base(argv[1], ft_atoi(argv[2]));
+        printf("og: %d\nmy: %d\n", ft_atoi(argv[1]), res);
     }
     else
     {
         // default 15 10
         int res = ft_atoi_base("15", 10);
-        printf("og: %d\nmy: %d\n", atoi("15"), res);
+        printf("og: %d\nmy: %d\n", ft_atoi("15"), res);
     }
     return (0);
 }
